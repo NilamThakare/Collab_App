@@ -2,156 +2,246 @@
 <html>
 <head>
 <title>Chat with Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+:root {
+    --bg: #f6f7f9;
+    --topbar-bg: #15181f;
+    --card-bg: #ffffff;
+    --card-border: #e6e8ec;
+    --text: #16181d;
+    --text-muted: #6b7280;
+    --accent: #4f6df5;
+    --bubble-them: #eef1f5;
+    --bubble-them-text: #16181d;
+    --bubble-mine: #4f6df5;
+    --bubble-mine-text: #ffffff;
+}
+
 body.dark {
-  background: radial-gradient(circle at top left,#4facfe,#0f2027);
-  color: white;
+    --bg: #0e1015;
+    --topbar-bg: #0a0c10;
+    --card-bg: #181b22;
+    --card-border: #262a33;
+    --text: #f1f2f4;
+    --text-muted: #8b919e;
+    --accent: #5c7cfa;
+    --bubble-them: #1e2330;
+    --bubble-them-text: #f1f2f4;
 }
 
-body.light {
-  background: #f4f6fb;
-  color: #111;
-}
-
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body {
-  min-height:100vh;
-  background:radial-gradient(circle at top left,#4facfe,#0f2027);
-  color:#fff;
-  display:flex;
-  flex-direction:column;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
 }
 
-/* Topbar */
-.topbar{
-  height:60px;
-  background:rgba(0,0,0,0.45);
-  backdrop-filter:blur(10px);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
+/* TOPBAR */
+.topbar {
+    height: 60px;
+    background: var(--topbar-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    flex-shrink: 0;
 }
 
-.back-btn{
-  text-decoration:none;
-  background:linear-gradient(135deg,#4facfe,#00f2fe);
-  color:black;
-  padding:8px 18px;
-  border-radius:20px;
-  font-weight:600;
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-/* Chat Card */
-.chat-card{
-  width:700px;
-  max-width:95%;
-  height:500px;
-  margin:30px auto;
-  display:flex;
-  flex-direction:column;
-  background:rgba(255,255,255,0.12);
-  backdrop-filter:blur(15px);
-  border-radius:20px;
-  padding:20px;
-  color:white;
-  box-shadow:0 8px 30px rgba(0,0,0,0.3);
+.admin-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
 }
 
-/* Messages Box */
-.messages-box{
-  flex:1;
-  overflow-y:auto;
-  margin-bottom:15px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  padding-right:5px;
+.topbar-info h3 { font-size: 14px; font-weight: 600; color: #fff; }
+.topbar-info p  { font-size: 11.5px; color: #8b919e; }
+
+.back-btn {
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .15s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.16); }
+
+/* CONTENT */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
 }
 
-/* Message */
-.msg{
-  max-width:70%;
-  padding:8px 12px;
-  border-radius:15px;
-  word-wrap:break-word;
+/* CHAT CARD */
+.chat-card {
+    width: 700px;
+    max-width: 95%;
+    height: 540px;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 20px;
+    overflow: hidden;
 }
 
-/* User vs Admin */
-.msg-user{
-  background:rgba(255,255,255,0.15);
-  align-self:flex-start;
+/* MESSAGES */
+.messages-box {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 6px;
 }
 
-.msg-admin{
-  background:#34ffd2;
-  color:#111;
-  align-self:flex-end;
+.messages-box::-webkit-scrollbar { width: 6px; }
+.messages-box::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 6px; }
+
+.empty-state {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-align: center;
+    margin: auto;
 }
 
-.msg-time{
-  font-size:11px;
-  opacity:0.7;
-  margin-top:4px;
-  text-align:right;
+.msg {
+    max-width: 72%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    word-wrap: break-word;
+    font-size: 13.5px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Input */
-.send-row{
-  display:flex;
-  gap:10px;
+.msg .sender-name {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: .7;
+    margin-bottom: 2px;
 }
 
-input{
-  flex:1;
-  border-radius:30px;
-  border:none;
-  padding:10px 15px;
-  outline:none;
+.msg-user {
+    background: var(--bubble-them);
+    color: var(--bubble-them-text);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
 }
 
-button{
-  background:linear-gradient(135deg,#4facfe,#00f2fe);
-  border:none;
-  border-radius:30px;
-  padding:10px 22px;
-  cursor:pointer;
-  font-weight:600;
+.msg-admin {
+    background: var(--bubble-mine);
+    color: var(--bubble-mine-text);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
 }
+
+.msg-time {
+    font-size: 10.5px;
+    opacity: 0.6;
+    margin-top: 5px;
+    text-align: right;
+}
+
+/* INPUT */
+.send-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+input[type="text"] {
+    flex: 1;
+    border-radius: 24px;
+    border: 1px solid var(--card-border);
+    padding: 11px 16px;
+    outline: none;
+    font-size: 13.5px;
+    background: var(--bg);
+    color: var(--text);
+    transition: border-color .15s;
+}
+input[type="text"]:focus { border-color: var(--accent); }
+input[type="text"]::placeholder { color: var(--text-muted); }
+
+button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13.5px;
+    transition: opacity .15s;
+}
+button:hover { opacity: .9; }
 </style>
 </head>
-<body>
 
-<div class="topbar">
-<span>Chat with Admin</span>
-<a href="/dashboard" class="back-btn">⬅ Back</a>
-</div>
+<body class="{{ session.get('theme','dark') }}">
 
-<div class="chat-card">
-  <div class="messages-box">
-
-    {% for id,msg,sender,time in chats %}
-    <div class="msg {% if sender=='admin' %}msg-admin{% else %}msg-user{% endif %}">
-      <b>{{ sender }}:</b> {{ msg }}
-      <div class="msg-time">
-        {{ time.strftime('%I:%M %p | %d %b %Y') }}
-      </div>
+<nav class="topbar">
+    <div class="topbar-left">
+        <div class="admin-avatar">A</div>
+        <div class="topbar-info">
+            <h3>Admin</h3>
+            <p>Private conversation</p>
+        </div>
     </div>
-    {% endfor %}
+    <a href="/dashboard" class="back-btn">Back</a>
+</nav>
 
-  </div>
+<div class="content">
+<div class="chat-card">
 
-<form method="post" class="send-row">
-<input type="text" name="message" placeholder="Type your message..." required>
-<button type="submit">Send</button>
-</form>
+    <div class="messages-box">
+
+        {% for id, msg, sender, time in chats %}
+        <div class="msg {% if sender == 'admin' %}msg-admin{% else %}msg-user{% endif %}">
+            <span class="sender-name">{{ 'Admin' if sender == 'admin' else session['username'] }}</span>
+            {{ msg }}
+            <div class="msg-time">{{ time.strftime('%I:%M %p | %d %b %Y') }}</div>
+        </div>
+        {% else %}
+        <p class="empty-state">No messages yet. Say hello to your admin!</p>
+        {% endfor %}
+
+    </div>
+
+    <form method="post" class="send-row">
+        <input type="text" name="message" placeholder="Type your message..." required>
+        <button type="submit">Send</button>
+    </form>
+
+</div>
 </div>
 
 </body>

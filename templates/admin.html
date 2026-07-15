@@ -1,219 +1,308 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+body {
+    min-height: 100vh;
+    background: #0e1015;
+    color: #f1f2f4;
+    display: flex;
+    flex-direction: column;
+}
 
-        body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            padding: 40px;
-            color: white;
-        }
+/* TOPBAR */
+.topbar {
+    height: 60px;
+    background: #0a0c10;
+    border-bottom: 1px solid #1e2330;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    flex-shrink: 0;
+}
 
-        h1 {
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
+.topbar .title { font-size: 16px; font-weight: 600; color: #fff; }
+.topbar-actions { display: flex; gap: 8px; }
 
-        /* Stats Cards */
-        .stats {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s;
+}
+.btn-primary { background: #4f6df5; color: #fff; }
+.btn-primary:hover { opacity: .9; }
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+.btn-ghost { background: rgba(255,255,255,0.07); color: #fff; }
+.btn-ghost:hover { background: rgba(255,255,255,0.13); }
 
-        .stat-card {
-            flex: 1;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(15px);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-        }
+/* CONTENT */
+.content { padding: 36px 40px; max-width: 1200px; margin: 0 auto; width: 100%; }
 
-        .stat-card h2 {
-            font-size: 32px;
-            margin-bottom: 5px;
-        }
+/* STATS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
 
-        .stat-card p {
-            font-size: 14px;
-            opacity: 0.8;
-        }
+.stat-card {
+    background: #181b22;
+    border: 1px solid #262a33;
+    border-radius: 12px;
+    padding: 22px 24px;
+}
+.stat-card .stat-num { font-size: 30px; font-weight: 700; margin-bottom: 4px; color: #f1f2f4; }
+.stat-card .stat-label { font-size: 13px; color: #8b919e; }
 
-        /* Table Container */
-        .table-container {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            margin-bottom: 40px;
-        }
+/* SECTION */
+.section {
+    background: #181b22;
+    border: 1px solid #262a33;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+.section-header h2 { font-size: 16px; font-weight: 600; }
 
-        th {
-            text-align: left;
-            padding: 12px;
-            font-size: 14px;
-            opacity: 0.9;
-        }
+.log-count {
+    font-size: 12px;
+    color: #8b919e;
+    background: #0e1015;
+    border: 1px solid #262a33;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
 
-        td {
-            padding: 12px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            font-size: 14px;
-        }
+/* TABLE */
+table { width: 100%; border-collapse: collapse; }
 
-        tr:hover {
-            background: rgba(255,255,255,0.08);
-        }
+th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #8b919e;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 1px solid #262a33;
+}
 
-        .allowed {
-            color: #00ffae;
-            font-weight: 600;
-        }
+td {
+    padding: 12px;
+    font-size: 13.5px;
+    border-bottom: 1px solid #1e2330;
+    color: #c9ced8;
+}
 
-        .not-allowed {
-            color: #ff4d6d;
-            font-weight: 600;
-        }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
 
-        .btn {
-            padding: 6px 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            background: #00c6ff;
-            color: black;
-            transition: 0.3s;
-        }
+/* Hidden log rows */
+.log-row { display: none; }
+.log-row.visible { display: table-row; }
 
-        .btn:hover {
-            background: #00ffae;
-            transform: scale(1.05);
-        }
-    </style>
+/* SHOW MORE */
+.show-more-wrap {
+    text-align: center;
+    padding-top: 16px;
+}
+
+.btn-show-more {
+    background: #0e1015;
+    border: 1px solid #262a33;
+    color: #8b919e;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+}
+.btn-show-more:hover { background: #1e2330; color: #f1f2f4; }
+.btn-show-more:disabled { opacity: .4; cursor: default; }
+
+/* BADGES */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+.badge-allowed    { background: #052e16; color: #6ee7b7; }
+.badge-blocked    { background: #3b0a0a; color: #fca5a5; }
+.badge-active     { background: #3b0a0a; color: #fca5a5; }
+.badge-role-admin { background: #1c2236; color: #93c5fd; }
+.badge-role-user  { background: #1e2330; color: #8b919e; }
+</style>
 </head>
 
-<body class="{{ session.get('theme','dark') }}">
-<h1>👑 Admin Dashboard</h1>
+<body>
 
-<!-- ✅ Task Manager Button Added -->
-<a href="/admin_tasks">
-<button class="btn">Task Manager</button>
-</a>
+<nav class="topbar">
+    <span class="title">Admin Dashboard</span>
+    <div class="topbar-actions">
+        <a href="/admin_tasks" class="btn btn-primary">Task Manager</a>
+        <a href="/admin_private_chat" class="btn btn-ghost">Private Chats</a>
+        <a href="/view_tasks" class="btn btn-ghost">View All Tasks</a>
+        <a href="/logout" class="btn btn-ghost">Logout</a>
+    </div>
+</nav>
 
-<!-- Stats Section -->
-<div class="stats">
-    <div class="stat-card">
-        <h2>{{ users|length }}</h2>
-        <p>Total Users</p>
+<div class="content">
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-num">{{ users|length }}</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num">{{ users|selectattr(4, 'equalto', 1)|list|length }}</div>
+            <div class="stat-label">Logout Allowed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num">{{ users|selectattr(4, 'equalto', 0)|list|length }}</div>
+            <div class="stat-label">Logout Restricted</div>
+        </div>
     </div>
 
-    <div class="stat-card">
-        <h2>
-            {{ users|selectattr(4, 'equalto', 1)|list|length }}
-        </h2>
-        <p>Logout Allowed</p>
+    <!-- USERS TABLE -->
+    <div class="section">
+        <div class="section-header">
+            <h2>User Management</h2>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Logout</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>
+                        {% if user[3] == 'admin' %}
+                        <span class="badge badge-role-admin">Admin</span>
+                        {% else %}
+                        <span class="badge badge-role-user">User</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user[4] == 1 %}
+                        <span class="badge badge-allowed">Allowed</span>
+                        {% else %}
+                        <span class="badge badge-blocked">Restricted</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/allow_logout/{{ user[0] }}">
+                            Allow Logout
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
-    <div class="stat-card">
-        <h2>
-            {{ users|selectattr(4, 'equalto', 0)|list|length }}
-        </h2>
-        <p>Logout Restricted</p>
+    <!-- LOGIN LOGS TABLE -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Login / Logout History</h2>
+            <span class="log-count">{{ logs|length }} records</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Login Time</th>
+                    <th>Logout Time</th>
+                </tr>
+            </thead>
+            <tbody id="logsTableBody">
+                {% for log in logs %}
+                <tr class="log-row" data-index="{{ loop.index0 }}">
+                    <td>{{ log[0] }}</td>
+                    <td>{{ log[1] }}</td>
+                    <td>{{ log[2] }}</td>
+                    <td>
+                        {% if log[3] %}
+                        {{ log[3] }}
+                        {% else %}
+                        <span class="badge badge-active">Still logged in</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="show-more-wrap" id="showMoreWrap">
+            <button class="btn-show-more" id="showMoreBtn" onclick="showMore()">
+                Show more
+            </button>
+        </div>
     </div>
+
 </div>
 
-<!-- Users Table -->
-<div class="table-container">
-    <h2>Users Management</h2>
+<script>
+const PAGE_SIZE = 5;
+let visibleCount = 0;
+const rows = document.querySelectorAll(".log-row");
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Logout Permission</th>
-            <th>Action</th>
-        </tr>
+function showMore() {
+    const next = visibleCount + PAGE_SIZE;
+    for (let i = visibleCount; i < next && i < rows.length; i++) {
+        rows[i].classList.add("visible");
+    }
+    visibleCount = Math.min(next, rows.length);
 
-        {% for user in users %}
-        <tr>
-            <td>{{ user[0] }}</td>
-            <td>{{ user[1] }}</td>
-            <td>{{ user[2] }}</td>
-            <td>{{ user[3] }}</td>
+    if (visibleCount >= rows.length) {
+        document.getElementById("showMoreBtn").disabled = true;
+        document.getElementById("showMoreBtn").textContent = "All records shown";
+    } else {
+        document.getElementById("showMoreBtn").textContent =
+            `Show more (${rows.length - visibleCount} remaining)`;
+    }
+}
 
-            <td>
-                {% if user[4] == 1 %}
-                    <span class="allowed">Allowed</span>
-                {% else %}
-                    <span class="not-allowed">Restricted</span>
-                {% endif %}
-            </td>
-
-            <td>
-                <a class="btn" href="/allow_logout/{{ user[0] }}">
-                    Allow Logout
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-
-<!-- 🔥 NEW: Login / Logout Logs -->
-<div class="table-container">
-    <h2>📊 Login / Logout History</h2>
-
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Login Time</th>
-            <th>Logout Time</th>
-        </tr>
-
-        {% for log in logs %}
-        <tr>
-            <td>{{ log[0] }}</td>
-            <td>{{ log[1] }}</td>
-            <td>{{ log[2] }}</td>
-            <td>
-                {% if log[3] %}
-                    {{ log[3] }}
-                {% else %}
-                    <span class="not-allowed">Still Logged In</span>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+// Show first 5 on load
+showMore();
+</script>
 
 </body>
 </html>

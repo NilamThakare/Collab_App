@@ -1,177 +1,190 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Profile</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
-        }
+body {
+    min-height: 100vh;
+    background: #0e1015;
+    color: #f1f2f4;
+    display: flex;
+    flex-direction: column;
+}
 
-        body{
-            min-height:100vh;
-            background: radial-gradient(circle at top left, #4facfe, #0f2027);
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            color:#fff;
-        }
+.topbar {
+    height: 60px;
+    background: #0a0c10;
+    border-bottom: 1px solid #1e2330;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+}
 
-        /* CARD */
-        .edit-card{
-            width:480px;
-            max-width:95%;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(15px);
-            border-radius:22px;
-            padding:35px 30px;
-            box-shadow:0 0 30px rgba(0,0,0,0.35);
-            animation:fadeIn 0.8s ease;
-            text-align:center;
-        }
+.topbar .title { font-size: 16px; font-weight: 600; color: #fff; }
 
-        /* AVATAR */
-        .avatar-preview,
-        .avatar-letter{
-            width:120px;
-            height:120px;
-            border-radius:50%;
-            margin:0 auto 15px auto;
-            box-shadow:0 0 20px rgba(79,172,254,0.8);
-        }
+.back-btn {
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .15s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.16); }
 
-        .avatar-preview{
-            object-fit:cover;
-            border:3px solid rgba(255,255,255,0.8);
-        }
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
+}
 
-        .avatar-letter{
-            background: linear-gradient(135deg,#4facfe,#00f2fe);
-            color:black;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:48px;
-            font-weight:bold;
-        }
+.card {
+    width: 100%;
+    max-width: 440px;
+    background: #181b22;
+    border: 1px solid #262a33;
+    border-radius: 14px;
+    overflow: hidden;
+}
 
-        /* FIELDS */
-        .field{
-            margin-bottom:16px;
-            text-align:left;
-        }
+.card-top {
+    padding: 28px 28px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #262a33;
+    gap: 12px;
+}
 
-        label{
-            font-size:12px;
-            text-transform:uppercase;
-            letter-spacing:1px;
-            opacity:0.8;
-        }
+.avatar, .avatar-preview {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 3px solid #262a33;
+}
 
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="file"]{
-            width:100%;
-            padding:11px 12px;
-            margin-top:6px;
-            border-radius:12px;
-            border:none;
-            outline:none;
-            background: rgba(0,0,0,0.4);
-            color:#fff;
-        }
+.avatar-preview { object-fit: cover; }
 
-        input::placeholder{
-            color:#ccc;
-        }
+.avatar {
+    background: #4f6df5;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+}
 
-        /* BUTTON */
-        button{
-            width:100%;
-            margin-top:12px;
-            padding:12px;
-            border:none;
-            border-radius:14px;
-            background: linear-gradient(135deg,#4facfe,#00f2fe);
-            color:black;
-            font-weight:600;
-            cursor:pointer;
-            transition:0.3s;
-        }
+.card-top p { font-size: 13px; color: #8b919e; }
 
-        button:hover{
-            transform:translateY(-2px);
-            box-shadow:0 8px 20px rgba(79,172,254,0.6);
-        }
+.card-body { padding: 24px 28px 28px 28px; }
 
-        /* BACK LINK */
-        .back-link{
-            display:inline-block;
-            margin-top:15px;
-            text-decoration:none;
-            color:#fff;
-            opacity:0.8;
-        }
+.form-group { margin-bottom: 16px; }
 
-        .back-link:hover{
-            text-decoration:underline;
-        }
+label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #aab0bd;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
 
-        @keyframes fadeIn{
-            from{opacity:0; transform:translateY(20px);}
-            to{opacity:1; transform:translateY(0);}
-        }
-    </style>
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px 14px;
+    background: #0e1015;
+    border: 1px solid #262a33;
+    border-radius: 8px;
+    color: #f1f2f4;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color .15s;
+    font-family: 'Inter', sans-serif;
+}
+input:focus { border-color: #4f6df5; }
+input::placeholder { color: #4b5260; }
+input[type="file"] { color: #8b919e; padding: 8px 14px; }
+
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    background: #4f6df5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: opacity .15s;
+}
+.btn-submit:hover { opacity: .9; }
+</style>
 </head>
+
 <body>
 
-<div class="edit-card">
+<nav class="topbar">
+    <span class="title">Edit Profile</span>
+    <a href="/profile" class="back-btn">Back to Profile</a>
+</nav>
 
-    {% if user[2] %}
+<div class="content">
+<div class="card">
+
+    <div class="card-top">
+        {% if user[2] %}
         <img src="{{ url_for('static', filename='profile_pics/' ~ user[2]) }}" class="avatar-preview">
-    {% else %}
-        <div class="avatar-letter">
-            {{ user[0][0]|upper }}
-        </div>
-    {% endif %}
+        {% else %}
+        <div class="avatar">{{ user[0][0]|upper }}</div>
+        {% endif %}
+        <p>Update your name, password or profile picture</p>
+    </div>
 
-    <!-- DO NOT CHANGE LOGIC -->
-    <form method="post" enctype="multipart/form-data">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
 
-        <div class="field">
-            <label>Username</label>
-            <input type="text" name="username" value="{{ user[0] }}">
-        </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" value="{{ user[0] }}">
+            </div>
 
-        <div class="field">
-            <label>Email</label>
-            <input type="email" name="email" value="{{ user[1] }}">
-        </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value="{{ user[1] }}">
+            </div>
 
-        <div class="field">
-            <label>New Password</label>
-            <input type="password" name="password" placeholder="Leave blank to keep same password">
-        </div>
+            <div class="form-group">
+                <label>New Password</label>
+                <input type="password" name="password" placeholder="Leave blank to keep same password">
+            </div>
 
-        <div class="field">
-            <label>Profile Picture</label>
-            <input type="file" name="profile_pic">
-        </div>
+            <div class="form-group">
+                <label>Profile Picture</label>
+                <input type="file" name="profile_pic">
+            </div>
 
-        <button type="submit">Save Changes</button>
-    </form>
+            <button type="submit" class="btn-submit">Save Changes</button>
 
-    <a href="/profile" class="back-link">← Back to Profile</a>
+        </form>
+    </div>
 
+</div>
 </div>
 
 </body>

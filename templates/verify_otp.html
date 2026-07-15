@@ -1,102 +1,162 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Verify OTP</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify OTP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
-        }
+body {
+    min-height: 100vh;
+    background: #0e1015;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
 
-        body{
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            background: radial-gradient(circle at top left, #4facfe, #0f2027);
-            color:#fff;
-        }
+.card {
+    width: 100%;
+    max-width: 360px;
+    background: #181b22;
+    border: 1px solid #262a33;
+    border-radius: 14px;
+    padding: 36px 32px;
+    text-align: center;
+}
 
-        .card{
-            width:340px;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(15px);
-            padding:35px 30px;
-            border-radius:20px;
-            text-align:center;
-            box-shadow:0 0 30px rgba(0,0,0,0.35);
-            animation:fadeIn 0.8s ease;
-        }
+.icon {
+    width: 52px;
+    height: 52px;
+    background: #1c2236;
+    border: 1px solid #2e3a55;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin: 0 auto 18px auto;
+}
 
-        h2{
-            margin-bottom:8px;
-            font-weight:600;
-        }
+h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f1f2f4;
+    margin-bottom: 6px;
+}
 
-        p{
-            font-size:14px;
-            opacity:0.8;
-            margin-bottom:20px;
-        }
+.subtitle {
+    font-size: 13px;
+    color: #8b919e;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
 
-        input{
-            width:100%;
-            padding:12px;
-            margin-top:10px;
-            border-radius:12px;
-            border:none;
-            outline:none;
-            background: rgba(0,0,0,0.4);
-            color:#fff;
-        }
+.form-group { margin-bottom: 14px; text-align: left; }
 
-        input::placeholder{
-            color:#ccc;
-        }
+label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #aab0bd;
+    margin-bottom: 6px;
+}
 
-        button{
-            width:100%;
-            margin-top:18px;
-            padding:12px;
-            border:none;
-            border-radius:14px;
-            background: linear-gradient(135deg,#4facfe,#00f2fe);
-            color:black;
-            font-weight:600;
-            cursor:pointer;
-            transition:0.3s;
-        }
+input {
+    width: 100%;
+    padding: 12px 14px;
+    background: #0e1015;
+    border: 1px solid #262a33;
+    border-radius: 8px;
+    color: #f1f2f4;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: .25em;
+    text-align: center;
+    outline: none;
+    transition: border-color .15s;
+}
+input:focus { border-color: #4f6df5; }
+input::placeholder { color: #4b5260; letter-spacing: normal; font-size: 14px; font-weight: 400; }
 
-        button:hover{
-            transform:translateY(-2px);
-            box-shadow:0 8px 20px rgba(79,172,254,0.6);
-        }
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    background: #4f6df5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: opacity .15s;
+}
+.btn-submit:hover { opacity: .9; }
 
-        @keyframes fadeIn{
-            from{opacity:0; transform:translateY(20px);}
-            to{opacity:1; transform:translateY(0);}
-        }
-    </style>
+.footer-note {
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: #8b919e;
+}
+
+.timer { color: #5c7cfa; font-weight: 600; }
+</style>
 </head>
+
 <body>
 
 <div class="card">
-    <h2>🔐 Verify OTP</h2>
-    <p>OTP expires in 2 minutes</p>
+
+    
+    <h2>Check your email</h2>
+    <p class="subtitle">
+        We sent a 6-digit OTP to your email address.<br>
+        Enter it below to continue.
+    </p>
 
     <form method="POST" action="/verify_otp">
-        <input type="text" name="otp" required placeholder="Enter OTP">
-        <button type="submit">Verify</button>
+
+        <div class="form-group">
+            <label>One-time password</label>
+            <input
+                type="text"
+                name="otp"
+                inputmode="numeric"
+                maxlength="6"
+                placeholder="······"
+                required
+                autocomplete="one-time-code"
+            >
+        </div>
+
+        <button type="submit" class="btn-submit">Verify OTP</button>
+
     </form>
+
+    <p class="footer-note">OTP expires in <span class="timer" id="timer">02:00</span></p>
+
 </div>
+
+<script>
+let seconds = 120;
+const timerEl = document.getElementById("timer");
+
+const interval = setInterval(() => {
+    seconds--;
+    if (seconds <= 0) {
+        clearInterval(interval);
+        timerEl.textContent = "Expired";
+        timerEl.style.color = "#e5484d";
+        return;
+    }
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    timerEl.textContent = `${m}:${s}`;
+}, 1000);
+</script>
 
 </body>
 </html>

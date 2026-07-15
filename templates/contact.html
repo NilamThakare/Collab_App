@@ -1,66 +1,154 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <title>Contact</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{
-  margin:0;
-  font-family:Segoe UI,Arial;
-  background:#0f172a;
-  color:white;
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+body {
+    min-height: 100vh;
+    background: #0e1015;
+    color: #f1f2f4;
+    display: flex;
+    flex-direction: column;
 }
-nav{
-  background:#ffffff10;
-  backdrop-filter:blur(15px);
-  padding:15px 40px;
-  display:flex;
-  justify-content:space-between;
+
+/* TOPNAV */
+.top-nav {
+    height: 56px;
+    background: #0a0c10;
+    border-bottom: 1px solid #1e2330;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    flex-shrink: 0;
 }
-nav a{color:#34ffd2;text-decoration:none;margin-left:20px;}
-.container{
-  padding:80px;
-  max-width:500px;
-  margin:auto;
+
+.brand-name { font-size: 15px; font-weight: 700; color: #fff; }
+
+.nav-right { display: flex; gap: 6px; }
+
+.nav-right a {
+    color: #8b919e;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 7px;
+    transition: background .15s, color .15s;
 }
-input,textarea{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  margin-bottom:15px;
+.nav-right a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+
+/* CONTENT */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
 }
-button{
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#2563eb;
-  color:white;
-  width:100%;
+
+/* CARD */
+.card {
+    width: 100%;
+    max-width: 460px;
+    background: #181b22;
+    border: 1px solid #262a33;
+    border-radius: 14px;
+    padding: 36px 32px;
 }
+
+.card-header { margin-bottom: 24px; }
+.card-header h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.card-header p  { font-size: 13px; color: #8b919e; }
+
+.form-group { margin-bottom: 14px; }
+
+label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #aab0bd;
+    margin-bottom: 6px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: #0e1015;
+    border: 1px solid #262a33;
+    border-radius: 8px;
+    color: #f1f2f4;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color .15s;
+    font-family: 'Inter', sans-serif;
+}
+input:focus, textarea:focus { border-color: #4f6df5; }
+input::placeholder, textarea::placeholder { color: #4b5260; }
+textarea { resize: vertical; }
+
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    background: #4f6df5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: opacity .15s;
+}
+.btn-submit:hover { opacity: .9; }
 </style>
 </head>
+
 <body>
 
-<nav>
-  <b>Collab App</b>
-  <div>
-    <a href="/">Login</a>
-    <a href="/about">About</a>
-  </div>
+<nav class="top-nav">
+    <span class="brand-name">Collab App</span>
+    <div class="nav-right">
+        <a href="/">Login</a>
+        <a href="/about">About</a>
+    </div>
 </nav>
 
-<div class="container">
-<h2>Contact Us</h2>
+<div class="content">
+<div class="card">
 
-<form method="POST">
-  <input type="text" name="username" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <textarea rows="4" name="msg" placeholder="Message" required></textarea>
-  <button type="submit">Send</button>
-</form>
+    <div class="card-header">
+        <h2>Contact Us</h2>
+        <p>Send us a message and we'll get back to you.</p>
+    </div>
 
+    <form method="POST">
+
+        <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="username" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label>Message</label>
+            <textarea rows="4" name="msg" placeholder="Write your message..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Send Message</button>
+
+    </form>
+
+</div>
 </div>
 
 </body>

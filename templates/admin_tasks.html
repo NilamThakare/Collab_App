@@ -1,143 +1,219 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Tasks</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Admin Tasks</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        body.dark {background: radial-gradient(circle at top left,#4facfe,#0f2027); color: white;}
-        body.light {background: #f4f6fb; color: #111;}
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-        body{min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:30px;}
+body {
+    min-height: 100vh;
+    background: #0e1015;
+    color: #f1f2f4;
+    display: flex;
+    flex-direction: column;
+}
 
-        h2{margin-bottom:15px;}
+/* TOPBAR */
+.topbar {
+    height: 60px;
+    background: #0a0c10;
+    border-bottom: 1px solid #1e2330;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+}
 
-        .card{
-            width:600px; max-width:95%;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(12px);
-            padding:20px 25px;
-            border-radius:18px;
-            margin-bottom:20px;
-            box-shadow:0 6px 20px rgba(0,0,0,0.25);
-        }
+.topbar .title { font-size: 16px; font-weight: 600; color: #fff; }
 
-        input, textarea, select{
-            width:100%;
-            padding:12px;
-            border-radius:12px;
-            border:none;
-            outline:none;
-            margin-top:6px;
-            background: rgba(0,0,0,0.4);
-            color:white;
-            font-family:monospace;
-        }
+.topbar-actions { display: flex; gap: 8px; }
 
-        button{
-            margin-top:15px;
-            padding:12px 25px;
-            border:none;
-            border-radius:15px;
-            cursor:pointer;
-            font-weight:600;
-            background: linear-gradient(135deg,#4facfe,#00f2fe);
-            color:black;
-            transition:0.3s;
-        }
-        button:hover{
-            transform:translateY(-2px);
-            box-shadow:0 8px 20px rgba(0,0,0,0.3);
-        }
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s;
+}
+.btn-primary { background: #4f6df5; color: #fff; }
+.btn-primary:hover { opacity: .9; }
+.btn-ghost {
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.13); }
 
-        .view-tasks-btn{
-            display:block;
-            width:200px;
-            margin:30px auto 0 auto;
-            text-align:center;
-        }
+/* CONTENT */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 40px 24px;
+}
 
-        #popup-msg {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: linear-gradient(135deg,#4facfe,#00f2fe);
-            color: black;
-            padding: 15px 25px;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-            font-weight: 600;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.5s ease;
-            z-index: 9999;
-        }
+.wrapper {
+    width: 100%;
+    max-width: 580px;
+}
 
-        #popup-msg.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+.page-header {
+    margin-bottom: 24px;
+}
+.page-header h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.page-header p  { font-size: 13px; color: #8b919e; }
+
+/* CARD */
+.card {
+    background: #181b22;
+    border: 1px solid #262a33;
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin-bottom: 16px;
+}
+
+.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 20px; }
+
+.form-group { margin-bottom: 16px; }
+
+label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #aab0bd;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px 14px;
+    background: #0e1015;
+    border: 1px solid #262a33;
+    border-radius: 8px;
+    color: #f1f2f4;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color .15s;
+    font-family: 'Inter', sans-serif;
+}
+input:focus, textarea:focus, select:focus { border-color: #4f6df5; }
+input::placeholder, textarea::placeholder { color: #4b5260; }
+select option { background: #181b22; }
+textarea { resize: vertical; }
+
+.btn-submit {
+    width: 100%;
+    padding: 11px;
+    background: #4f6df5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: opacity .15s;
+}
+.btn-submit:hover { opacity: .9; }
+
+/* POPUP */
+#popup-msg {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: #052e16;
+    border: 1px solid #166534;
+    color: #6ee7b7;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+    z-index: 9999;
+}
+#popup-msg.show { opacity: 1; transform: translateY(0); }
+</style>
 </head>
 
-<body class="{{ session.get('theme','dark') }}">
+<body>
 
-<h2>Admin Tasks</h2>
+<nav class="topbar">
+    <span class="title">Task Manager</span>
+    <div class="topbar-actions">
+        <a href="{{ url_for('view_tasks') }}" class="btn btn-ghost">View All Tasks</a>
+        <a href="/admin_dashboard" class="btn btn-ghost">Dashboard</a>
+    </div>
+</nav>
 
-<!-- CREATE TASK FORM -->
-<div class="card">
-    <form action="/create_task" method="POST">
+<div class="content">
+<div class="wrapper">
 
-        <label>Task Title</label><br>
-        <input type="text" name="title" required><br><br>
+    <div class="page-header">
+        <h2>Create a Task</h2>
+        <p>Assign tasks to team members with a deadline.</p>
+    </div>
 
-        <label>Description</label><br>
-        <textarea name="description"></textarea><br><br>
+    <div class="card">
+        <form action="/create_task" method="POST">
 
-        <!-- ✅ UPDATED PART (User dropdown) -->
-        <label>Assign To</label><br>
-        <select name="assigned_to" required>
-            <option value="">Select User</option>
-            <option value="all">All Users</option>
+            <div class="form-group">
+                <label>Task Title</label>
+                <input type="text" name="title" placeholder="Enter task title" required>
+            </div>
 
-            {% for user in users %}
-                <option value="{{ user[0] }}">{{ user[0] }}</option>
-            {% endfor %}
-        </select><br><br>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" rows="3" placeholder="Describe the task..."></textarea>
+            </div>
 
-        
+            <div class="form-group">
+                <label>Assign To</label>
+                <select name="assigned_to" required>
+                    <option value="">Select a user</option>
+                    <option value="all">All Users</option>
+                    {% for user in users %}
+                    <option value="{{ user[0] }}">{{ user[0] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-        <label>Deadline</label><br>
-<input type="datetime-local" name="deadline" id="deadline" required><br><br>
+            <div class="form-group">
+                <label>Deadline</label>
+                <input type="datetime-local" name="deadline" id="deadline" required>
+            </div>
 
-<script>
-  const now = new Date();
-  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-  document.getElementById("deadline").min = now.toISOString().slice(0,16);
-</script>
+            <button type="submit" class="btn-submit">Send Task</button>
 
-        <button type="submit">Send Task</button>
-    </form>
+        </form>
+    </div>
+
+</div>
 </div>
 
-<!-- VIEW TASKS BUTTON -->
-<a href="{{ url_for('view_tasks') }}">
-    <button class="view-tasks-btn">View Tasks</button>
-</a>
-
-<!-- POPUP MESSAGE -->
 {% if request.args.get('success') %}
-<div id="popup-msg">Task sent successfully!</div>
+<div id="popup-msg">✓ Task sent successfully!</div>
 <script>
     const popup = document.getElementById('popup-msg');
     popup.classList.add('show');
-    setTimeout(() => { popup.classList.remove('show'); }, 3000);
+    setTimeout(() => popup.classList.remove('show'), 3000);
 </script>
 {% endif %}
+
+<script>
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById("deadline").min = now.toISOString().slice(0, 16);
+</script>
 
 </body>
 </html>

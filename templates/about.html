@@ -1,94 +1,189 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <title>About Us</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-body.dark {
-  background: radial-gradient(circle at top left,#4facfe,#0f2027);
-  color: white;
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+body {
+    min-height: 100vh;
+    background: #0e1015;
+    color: #f1f2f4;
+    display: flex;
+    flex-direction: column;
 }
 
-body.light {
-  background: #f4f6fb;
-  color: #111;
+/* TOPNAV */
+.top-nav {
+    height: 56px;
+    background: #0a0c10;
+    border-bottom: 1px solid #1e2330;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    flex-shrink: 0;
 }
 
-body.light .sidebar {
-  background: #ffffff;
-  color: black;
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.nav-logo  { width: 28px; }
+.brand-name { font-size: 15px; font-weight: 700; color: #fff; }
+
+.nav-right { display: flex; gap: 6px; }
+.nav-right a {
+    color: #8b919e;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 7px;
+    transition: background .15s, color .15s;
+}
+.nav-right a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+
+/* CONTENT */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 24px;
 }
 
-body.light .card {
-  background: #ffffff;
-  color: black;
+.about-wrapper {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-body.light a {
-  color: #333;
+/* HEADER */
+.page-header { text-align: center; margin-bottom: 8px; }
+
+.badge {
+    display: inline-block;
+    background: #1c2236;
+    border: 1px solid #2e3a55;
+    color: #5c7cfa;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: .04em;
 }
-body{
-  margin:0;
-  font-family:Segoe UI,Arial;
-  background:#0f172a;
-  color:white;
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
-nav{
-  background:#ffffff10;
-  backdrop-filter:blur(15px);
-  padding:15px 40px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  
+
+.page-header p {
+    font-size: 14px;
+    color: #8b919e;
+    line-height: 1.6;
 }
-.logo{
-  height: 50px;   /* smaller size */
-  width: auto;
+
+/* CARDS */
+.card {
+    background: #181b22;
+    border: 1px solid #262a33;
+    border-radius: 12px;
+    padding: 24px 26px;
 }
-nav a{color:#34ffd2;text-decoration:none;margin-left:20px;}
-.container{
-  padding:80px;
-  text-align:center;
+
+.card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #5c7cfa;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 10px;
 }
-h1{color:#34ffd2;}
-.card{
-  background:#ffffff10;
-  padding:30px;
-  border-radius:20px;
-  margin-top:40px;
+
+.card p {
+    font-size: 14px;
+    color: #aab0bd;
+    line-height: 1.7;
 }
+
+/* MISSION CARD */
+.mission-card {
+    background: #1c2236;
+    border: 1px solid #2e3a55;
+    border-radius: 12px;
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.mission-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.mission-card p {
+    font-size: 14px;
+    color: #c7d0e8;
+    line-height: 1.6;
+}
+
+.mission-card strong { color: #fff; }
 </style>
 </head>
+
 <body>
 
-
-<nav>
-  <div class="nav-left">
-    <img src="{{ url_for('static', filename='logo.png') }}" class="logo">
-    <b>Collab App</b>
-  </div>
-  <div>
-    <a href="/">Login</a>
-    <a href="/about">About</a>
-  </div>
+<nav class="top-nav">
+    <div class="nav-left">
+        
+        <span class="brand-name">Collab App</span>
+    </div>
+    <div class="nav-right">
+        <a href="/">Login</a>
+        <a href="/contact">Contact</a>
+    </div>
 </nav>
 
-<div class="container">
-<h1>About Us</h1>
-<div class="card">
+<div class="content">
+<div class="about-wrapper">
 
-<p>
-  <strong>Collab App</strong> is developed by <strong>Sparklab Solutions</strong> to provide a reliable and efficient collaboration platform for users. 
-  The application was designed to solve common problems related to file management and teamwork by offering a centralized system for sharing and organizing files.
-  
-  Our objective is to create a secure and easy-to-use solution that enhances productivity and supports smooth collaboration between users. 
-  Collab App represents our commitment to innovation, simplicity, and user satisfaction.
-  </p>
-<p>
-Our mission is to make teamwork simple, secure and productive.
-</p>
+    <div class="page-header">
+        
+        <h1>About Collab App</h1>
+        <p>A reliable and efficient collaboration platform built for teams.</p>
+    </div>
+
+    <div class="card">
+        <h3>Who we are</h3>
+        <p>
+            <strong style="color:#fff;">Collab App</strong> is developed by Nilam Thakare to provide
+            a reliable and efficient collaboration platform for users. The application was designed to solve
+            common problems related to file management and teamwork by offering a centralized system for
+            sharing and organizing files.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>What we offer</h3>
+        <p>
+            We offer a secure and easy-to-use solution that enhances productivity and supports smooth
+            collaboration between users. Collab App represents our commitment to innovation, simplicity,
+            and user satisfaction.
+        </p>
+    </div>
+
+    <div class="mission-card">
+        
+        <p><strong>Our mission —</strong> to make teamwork simple, secure, and productive.</p>
+    </div>
+
 </div>
 </div>
 

@@ -1,13 +1,98 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Logout Blocked</title>
-  <script>
-    alert("Admin has not allowed logout yet!");
-    window.location.href = "/dashboard";
-  </script>
+<title>Logout Not Allowed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+body {
+    min-height: 100vh;
+    background: #0e1015;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    color: #f1f2f4;
+}
+
+.card {
+    width: 100%;
+    max-width: 360px;
+    background: #181b22;
+    border: 1px solid #262a33;
+    border-radius: 14px;
+    padding: 36px 32px;
+    text-align: center;
+}
+
+.icon {
+    width: 56px;
+    height: 56px;
+    background: #3d2b00;
+    border: 1px solid #78350f;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 20px auto;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 13.5px;
+    color: #8b919e;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: opacity .15s;
+}
+.btn-primary { background: #4f6df5; color: #fff; }
+.btn-primary:hover { opacity: .9; }
+</style>
+
+<script>
+  // Redirect to dashboard after 3 seconds (same behavior as original alert + redirect)
+  setTimeout(() => { window.location.href = "/dashboard"; }, 3000);
+</script>
 </head>
-<body></body>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">🔒</div>
+
+    <h2>Logout not allowed</h2>
+
+    <p class="subtitle">
+        Admin has not granted logout permission yet.<br>
+        You'll be redirected to your dashboard in a moment.
+    </p>
+
+    <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+
+</div>
+
+</body>
 </html>

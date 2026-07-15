@@ -1,84 +1,207 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Task Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-body.dark{
-background: radial-gradient(circle at top left,#4facfe,#0f2027);
-color:white;
+:root {
+    --bg: #f6f7f9;
+    --topbar-bg: #15181f;
+    --card-bg: #ffffff;
+    --card-border: #e6e8ec;
+    --text: #16181d;
+    --text-muted: #6b7280;
+    --accent: #4f6df5;
 }
 
-body.light{
-background:#f4f6fb;
-color:#111;
+body.dark {
+    --bg: #0e1015;
+    --topbar-bg: #0a0c10;
+    --card-bg: #181b22;
+    --card-border: #262a33;
+    --text: #f1f2f4;
+    --text-muted: #8b919e;
+    --accent: #5c7cfa;
 }
 
-body{
-font-family:Poppins;
-padding:40px;
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
 }
 
-.card{
-
-background: rgba(255,255,255,0.12);
-backdrop-filter: blur(12px);
-padding:30px;
-border-radius:18px;
-width:500px;
-max-width:95%;
-box-shadow:0 6px 20px rgba(0,0,0,0.25);
-transition:0.3s;
-
+/* TOPBAR */
+.topbar {
+    height: 60px;
+    background: var(--topbar-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
 }
 
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 10px 25px rgba(0,0,0,0.35);
+.topbar .title { font-size: 16px; font-weight: 600; color: #fff; }
+
+.back-btn {
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .15s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.16); }
+
+/* CONTENT */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
 }
 
-h2{
-margin-bottom:20px;
-font-weight:600;
+/* CARD */
+.card {
+    width: 100%;
+    max-width: 520px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
 }
 
-p{
-margin:10px 0;
-font-size:14px;
+/* CARD HEADER */
+.card-header {
+    padding: 24px 28px 20px 28px;
+    border-bottom: 1px solid var(--card-border);
 }
 
+.card-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+/* STATUS BADGES */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.badge-pending   { background: #fef3c7; color: #92400e; }
+.badge-progress  { background: #dbeafe; color: #1e40af; }
+.badge-completed { background: #d1fae5; color: #065f46; }
+
+body.dark .badge-pending   { background: #3d2b00; color: #fcd34d; }
+body.dark .badge-progress  { background: #1e2f55; color: #93c5fd; }
+body.dark .badge-completed { background: #052e16; color: #6ee7b7; }
+
+/* CARD BODY */
+.card-body { padding: 22px 28px; display: flex; flex-direction: column; gap: 16px; }
+
+.detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.detail-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+}
+
+.detail-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.detail-value.muted { color: var(--text-muted); }
+
+.divider { border: none; border-top: 1px solid var(--card-border); }
+
+/* TWO COL */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
 </style>
-
 </head>
 
 <body class="{{ session.get('theme','dark') }}">
 
+<nav class="topbar">
+    <span class="title">Task Details</span>
+    <a href="javascript:history.back()" class="back-btn">Back</a>
+</nav>
+
+<div class="content">
 <div class="card">
 
-<h2>{{task.task_title}}</h2>
+    <div class="card-header">
+        <h2>{{ task.task_title }}</h2>
+        {% if task.status == 'Completed' %}
+        <span class="badge badge-completed">Completed</span>
+        {% elif task.status == 'In Progress' %}
+        <span class="badge badge-progress">In Progress</span>
+        {% else %}
+        <span class="badge badge-pending">Pending</span>
+        {% endif %}
+    </div>
 
-<p><b>Description:</b> {{task.task_description}}</p>
+    <div class="card-body">
 
-<p><b>Assigned To:</b> {{task.assigned_to}}</p>
+        {% if task.task_description %}
+        <div class="detail-row">
+            <span class="detail-label">Description</span>
+            <span class="detail-value">{{ task.task_description }}</span>
+        </div>
+        <hr class="divider">
+        {% endif %}
 
-<p><b>Deadline:</b> {{task.deadline}}</p>
+        <div class="two-col">
+            <div class="detail-row">
+                <span class="detail-label">Assigned To</span>
+                <span class="detail-value">{{ task.assigned_to }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Created By</span>
+                <span class="detail-value">{{ task.created_by }}</span>
+            </div>
+        </div>
 
-<p><b>Status:</b> {{task.status}}</p>
+        <div class="two-col">
+            <div class="detail-row">
+                <span class="detail-label">Deadline</span>
+                <span class="detail-value">{{ task.deadline or 'No deadline' }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Created At</span>
+                <span class="detail-value muted">{{ task.created_at }}</span>
+            </div>
+        </div>
 
-<p><b>Created By:</b> {{task.created_by}}</p>
+    </div>
 
-<p><b>Created At:</b> {{task.created_at}}</p>
-
+</div>
 </div>
 
 </body>

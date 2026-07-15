@@ -1,123 +1,182 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
   <title>Register</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
     body {
-      height: 100vh;
-      background: radial-gradient(circle at top, #1c2b4a, #0f172a);
+      min-height: 100vh;
+      background: #0e1015;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
+      padding: 24px;
     }
 
-    /* ⭐ STAR BACKGROUND */
-    .stars {
-      position: fixed;
-      width: 200%;
-      height: 200%;
-      background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
-      animation: moveStars 80s linear infinite;
-      z-index: 0;
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: #181b22;
+      border: 1px solid #262a33;
+      border-radius: 14px;
+      padding: 36px 32px;
     }
 
-    @keyframes moveStars {
-      from { transform: translateY(0); }
-      to { transform: translateY(-1000px); }
-    }
-
-    .login-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
-    }
-
-    .glass-card {
-      width: 400px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px);
-      border-radius: 25px;
-      padding: 40px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    .brand {
       text-align: center;
+      margin-bottom: 28px;
     }
 
-    h3 {
-      margin-bottom: 25px;
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: #4f6df5;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin: 0 auto 14px auto;
     }
 
-    .form-control {
-      border-radius: 20px;
+    .brand h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f1f2f4;
+      margin-bottom: 4px;
+    }
+
+    .brand p {
+      font-size: 13px;
+      color: #8b919e;
+    }
+
+    .form-group { margin-bottom: 14px; }
+
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #aab0bd;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 14px;
+      background: #0e1015;
+      border: 1px solid #262a33;
+      border-radius: 8px;
+      color: #f1f2f4;
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    input:focus { border-color: #4f6df5; }
+    input::placeholder { color: #4b5260; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 11px;
+      background: #4f6df5;
+      color: #fff;
       border: none;
-      padding: 12px 18px;
-      margin-bottom: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: opacity .15s;
     }
+    .btn-submit:hover { opacity: .9; }
 
-    .btn-success {
-      border-radius: 25px;
-      padding: 12px;
-    }
-
-    a {
-      color: #34ffd2;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* 🔄 SPINNER */
     .spinner {
       display: none;
-      margin-top: 15px;
+      text-align: center;
+      margin-top: 16px;
+      color: #8b919e;
+      font-size: 13px;
     }
+
+    .spinner-ring {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      border: 3px solid #262a33;
+      border-top-color: #4f6df5;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .divider {
+      text-align: center;
+      margin: 20px 0 0 0;
+      font-size: 13px;
+      color: #8b919e;
+    }
+
+    .divider a {
+      color: #4f6df5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .divider a:hover { text-decoration: underline; }
   </style>
 </head>
 
 <body>
 
-<div class="stars"></div>
+<div class="card">
 
-<div class="login-wrapper">
-
-  <div class="glass-card">
-
-    <h3>Create Account</h3>
-
-    <!-- 🔒 BACKEND LOGIC UNCHANGED -->
-    <form method="post" onsubmit="showSpinner()">
-      <input type="text" name="username" class="form-control" placeholder="Username" required>
-
-      <input type="password" name="password" class="form-control" placeholder="Password" required>
-
-      <input type="email" name="email" class="form-control" placeholder="Enter Email" required>
-
-      <input type="text" name="secret_key" class="form-control" placeholder="Enter Secret Key" required>
-
-      <button type="submit" class="btn btn-success w-100">Register</button>
-    </form>
-
-    <!-- 🔄 SPINNER -->
-    <div class="spinner" id="spinner">
-      <div class="spinner-border text-light"></div>
-      <p>Creating account...</p>
-    </div>
-
-    <div class="mt-3">
-      <a href="/">Already have an account?</a>
-    </div>
-
+  <div class="brand">
+    
+    <h2>Create Account</h2>
+    <p>Fill in the details below to get started</p>
   </div>
+
+  <form method="post" onsubmit="showSpinner()">
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" name="username" placeholder="Enter your username" required>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="you@example.com" required>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Create a password" required>
+    </div>
+
+    <div class="form-group">
+      <label>Secret Key</label>
+      <input type="text" name="secret_key" placeholder="Enter registration key" required>
+    </div>
+
+    <button type="submit" class="btn-submit">Create Account</button>
+
+  </form>
+
+  <div class="spinner" id="spinner">
+    <span class="spinner-ring"></span> Creating your account...
+  </div>
+
+  <div class="divider">
+    Already have an account? <a href="/">Sign in</a>
+  </div>
+
 </div>
 
 <script>

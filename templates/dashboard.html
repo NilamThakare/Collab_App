@@ -1,81 +1,259 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root{
-          --bg: #ffffff;
-          --text: #000000;
-          --card: #f2f2f2;
-        }
-        
-        body.dark{
-          --bg: #0f2027;
-          --text: #ffffff;
-          --card: rgba(255,255,255,0.12);
-        }
-        
-        body{
-          background: var(--bg);
-          color: var(--text);
-        }
-        
-        .card{
-          background: var(--card);
+        :root {
+            --bg: #f6f7f9;
+            --sidebar-bg: #15181f;
+            --sidebar-text: #c9ced8;
+            --card-bg: #ffffff;
+            --card-border: #e6e8ec;
+            --text: #16181d;
+            --text-muted: #6b7280;
+            --accent: #4f6df5;
+            --accent-light: #eef1ff;
+            --danger: #e5484d;
+            --radius: 10px;
         }
 
         body.dark {
-  background: radial-gradient(circle at top left,#4facfe,#0f2027);
-  color: white;
-}
+            --bg: #0e1015;
+            --sidebar-bg: #0a0c10;
+            --sidebar-text: #aab0bd;
+            --card-bg: #181b22;
+            --card-border: #262a33;
+            --text: #f1f2f4;
+            --text-muted: #8b919e;
+            --accent: #5c7cfa;
+            --accent-light: #1c2236;
+        }
 
-body.light {
-  background: #f4f6fb;
-  color: #111;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
-body.light .sidebar {
-  background: #ffffff;
-  color: black;
-}
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            transition: background .2s, color .2s;
+        }
 
-body.light .card {
-  background: #ffffff;
-  color: black;
-}
+        /* ---------- Sidebar ---------- */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 28px 18px;
+            display: flex;
+            flex-direction: column;
+        }
 
-body.light a {
-  color: #333;
-}
-        </style>
-    <style>
-        * {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-        body {display:flex;min-height:100vh;background:radial-gradient(circle at top left,#4facfe,#0f2027);color:#fff;}
-        .sidebar {width:260px;background:rgba(0,0,0,0.55);backdrop-filter:blur(15px);padding:25px 15px;box-shadow:4px 0 20px rgba(0,0,0,0.4);}
-        .avatar {width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#4facfe,#00f2fe);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 10px auto;overflow:hidden;box-shadow:0 0 20px rgba(79,172,254,0.7);}
-        .avatar img {width:100%;height:100%;object-fit:cover;}
-        .sidebar h3 {text-align:center;margin-bottom:25px;font-weight:600;}
-        .sidebar a {display:block;color:white;text-decoration:none;padding:14px;margin-bottom:10px;border-radius:10px;transition:.3s;background:rgba(255,255,255,.05);}
-        .sidebar a:hover {background:linear-gradient(135deg,#4facfe,#00f2fe);color:#000;transform:translateX(5px);}
-        .content {flex:1;padding:40px;}
-        h2 {margin-bottom:25px;font-size:28px;background:linear-gradient(to right,#00f2fe,#4facfe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-        .card {background:rgba(255,255,255,.12);backdrop-filter:blur(12px);padding:20px;border-radius:16px;margin-bottom:25px;}
-        textarea {width:100%;border-radius:12px;border:none;padding:12px;font-family:monospace;background:rgba(0,0,0,.4);color:#fff;}
-        button {background:linear-gradient(135deg,#4facfe,#00f2fe);border:none;padding:12px 22px;border-radius:10px;cursor:pointer;font-weight:600;}
-        .zip-row {display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid rgba(255,255,255,.1);}
-        .code-box{display:flex;justify-content:space-between;background:#4e7ea8;padding:15px;border-radius:12px;margin-bottom:15px;}
-        .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;}
-        .popup-box{background:white;padding:25px;border-radius:12px;text-align:center;width:300px;}
-        .popup-btn{display:inline-block;padding:10px 15px;margin:5px;border-radius:8px;color:white;}
-        .popup-btn.orange{background:orange;}
-        .popup-btn.red{background:red;}
-        .popup-btn.gray{background:gray;}
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            margin: 0 auto 12px auto;
+            overflow: hidden;
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .sidebar h3 {
+            text-align: center;
+            margin-bottom: 24px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .sidebar nav { display: flex; flex-direction: column; gap: 4px; }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background .15s, color .15s;
+        }
+        .sidebar a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+        .sidebar-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+        #timerBox {
+            margin-top: 14px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: .02em;
+        }
+        #timer { color: var(--accent); font-weight: 600; }
+
+        /* ---------- Main content ---------- */
+        .content { flex: 1; padding: 40px 48px; max-width: 880px; }
+
+        .page-header { margin-bottom: 28px; }
+        .page-header h2 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .page-header p { color: var(--text-muted); font-size: 14px; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 22px 24px;
+            margin-bottom: 22px;
+        }
+
+        .card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            padding: 12px;
+            font-family: 'Menlo', 'Consolas', monospace;
+            font-size: 13px;
+            background: var(--bg);
+            color: var(--text);
+            resize: vertical;
+        }
+        textarea:focus, input[type="file"]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+        button, .btn {
+            background: var(--accent);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            color: #fff;
+            transition: opacity .15s;
+        }
+        button:hover, .btn:hover { opacity: .9; }
+
+        form { margin-top: 12px; }
+        input[type="file"] {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-right: 10px;
+        }
+
+        .zip-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 14px;
+        }
+        .zip-row:last-child { border-bottom: none; }
+        .zip-meta { color: var(--text-muted); font-size: 12px; }
+
+        .row-actions { display: flex; align-items: center; gap: 14px; }
+        .row-actions a {
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--accent);
+        }
+        .row-actions a.danger { color: var(--danger); }
+
+        .empty-state {
+            color: var(--text-muted);
+            font-size: 13px;
+            padding: 8px 0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 8px 0 16px 0;
+        }
+
+        .code-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 16px 18px;
+            border-radius: var(--radius);
+            margin-bottom: 14px;
+            gap: 16px;
+        }
+        .code-box .code-meta { flex: 1; min-width: 0; }
+        .code-box strong { font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px; }
+        .code-box pre {
+            background: var(--bg);
+            border: 1px solid var(--card-border);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: 'Menlo', 'Consolas', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: var(--text);
+        }
+        .code-box .row-actions { flex-shrink: 0; flex-direction: column; align-items: flex-end; gap: 8px; }
+        .code-box button { padding: 6px 12px; font-size: 12px; background: var(--danger); }
+
+        /* ---------- Popup ---------- */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10,12,16,.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .popup-box {
+            background: var(--card-bg);
+            color: var(--text);
+            padding: 26px;
+            border-radius: 12px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.25);
+        }
+        .popup-box h3 { font-size: 16px; margin-bottom: 18px; }
+        .popup-btn {
+            display: inline-block;
+            padding: 9px 14px;
+            margin: 5px 4px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+        .popup-btn.orange { background: #f59e0b; }
+        .popup-btn.red { background: var(--danger); }
+        .popup-btn.gray { background: #9499a3; }
     </style>
 
 <script>
@@ -88,53 +266,58 @@ function closePopup(){document.getElementById("deletePopup").style.display="none
 </script>
 </head>
 
-<body>
+<body class="{{ session.get('theme','dark') }}">
 
 <div class="sidebar">
-<a href="/profile">
-{% if session['profile_pic'] %}
-<div class="avatar"><img src="{{ url_for('static', filename='profile_pics/' ~ session['profile_pic']) }}"></div>
-{% else %}
-<div class="avatar">{{ session['username'][0]|upper }}</div>
-{% endif %}
-</a>
-
-<h3>{{ session['username'] }}</h3>
-
-<body class="{{ session.get('theme','dark') }}"></body>
-<a href="/dashboard">🏠 Dashboard</a>
-<a href="/chat">💬 Chat</a>
-<a href="/profile">👤 Profile</a>
-<a href="/logout">🚪 Logout</a>
-<a href="/my_tasks">📋 My Tasks</a>
-<a href="/toggle_theme" style="margin-top:15px; display:block;">
-    {% if session.get('theme') == 'dark' %}
-      🌙 Light mode
+    <a href="/profile">
+    {% if session['profile_pic'] %}
+    <div class="avatar"><img src="{{ url_for('static', filename='profile_pics/' ~ session['profile_pic']) }}"></div>
     {% else %}
-      ☀ Dark mode
+    <div class="avatar">{{ session['username'][0]|upper }}</div>
     {% endif %}
     </a>
-<!-- ✅ TIMER ADDED (ONLY THIS PART NEW) -->
-<div id="timerBox" style="margin-top:15px;text-align:center;font-size:14px;color:#00f2fe;">
-    Session ends in: <span id="timer"></span>
-</div>
 
+    <h3>{{ session['username'] }}</h3>
+
+    <nav>
+        <a href="/dashboard"> Dashboard</a>
+        <a href="/chat"> Chat</a>
+        <a href="/profile"> Profile</a>
+        <a href="/my_tasks"> My Tasks</a>
+        <a href="/logout"> Logout</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="/toggle_theme">
+            {% if session.get('theme') == 'dark' %}
+            ☀ Light mode
+            {% else %}
+              🌙 Dark mode
+            {% endif %}
+        </a>
+        <div id="timerBox">
+            Session ends in: <span id="timer"></span>
+        </div>
+    </div>
 </div>
 
 <div class="content">
 
-<h2>Welcome, {{ session['username'] }} 👋</h2>
+<div class="page-header">
+    <h2>Welcome, {{ session['username'] }}</h2>
+    <p>Share code, files, and stay on top of your workspace.</p>
+</div>
 
 <div class="card">
-<h3>🧠 Upload Code</h3>
+<h3>Upload Code</h3>
 <form method="post" action="/upload_code">
-<textarea name="code" rows="5"></textarea><br><br>
+<textarea name="code" rows="5" placeholder="Paste your code here..."></textarea><br><br>
 <button type="submit">Upload Code</button>
 </form>
 </div>
 
 <div class="card">
-<h3>📦 Upload ZIP File</h3>
+<h3> Upload ZIP File</h3>
 <form method="POST" enctype="multipart/form-data">
 <input type="file" name="file" required>
 <button type="submit">Upload</button>
@@ -145,37 +328,46 @@ function closePopup(){document.getElementById("deletePopup").style.display="none
 <h3>📁 Shared ZIP Files</h3>
 {% for f in shared_files %}
 <div class="zip-row">
-{{ f.name }} ({{ f.size }} KB) — {{ f.uploaded_by }}
-<a href="/download_shared/{{ f.name }}">Download⬇</a>
-{% if f.uploaded_by == session["username"] %}
-<a href="/delete_shared/{{ f.id }}" style="color:red;">Delete🗑</a>
-{% endif %}
+    <div>
+        <strong>{{ f.name }}</strong>
+        <div class="zip-meta">{{ f.size }} KB &middot; uploaded by {{ f.uploaded_by }}</div>
+    </div>
+    <div class="row-actions">
+        <a href="/download_shared/{{ f.name }}">Download</a>
+        {% if f.uploaded_by == session["username"] %}
+        <a href="/delete_shared/{{ f.id }}" class="danger">Delete</a>
+        {% endif %}
+    </div>
 </div>
+{% else %}
+<p class="empty-state">No files shared yet.</p>
 {% endfor %}
 </div>
 
-<h2>Your Codes</h2>
+<h2 class="section-title">Your Codes</h2>
 
 {% for code in codes %}
 <div class="code-box">
-<div>
-<strong>{{ code[1] }}</strong>
-<pre>{{ code[2] }}</pre>
+    <div class="code-meta">
+        <strong>{{ code[1] }}</strong>
+        <pre>{{ code[2] }}</pre>
+    </div>
+    <div class="row-actions">
+        <a href="/download_code/{{ code[0] }}">Download</a>
+        {% if code[1] == session["username"] %}
+        <button onclick="openPopup({{ code[0] }})">Delete</button>
+        {% endif %}
+    </div>
 </div>
-<div>
-<a href="/download_code/{{ code[0] }}">Download⬇</a>
-{% if code[1] == session["username"] %}
-<button onclick="openPopup({{ code[0] }})">Delete🗑</button>
-{% endif %}
-</div>
-</div>
+{% else %}
+<p class="empty-state">No code snippets shared yet.</p>
 {% endfor %}
 
 </div>
 
 <div id="deletePopup" class="popup-overlay">
 <div class="popup-box">
-<h3>Delete Code</h3>
+<h3>Delete this code snippet?</h3>
 <a id="deleteMeBtn" class="popup-btn orange">Delete for me</a>
 <a id="deleteAllBtn" class="popup-btn red">Delete for all</a><br>
 <button onclick="closePopup()" class="popup-btn gray">Cancel</button>

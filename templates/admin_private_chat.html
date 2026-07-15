@@ -2,190 +2,281 @@
 <html>
 <head>
 <title>Admin Private Chat</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-body.dark {
-  background: radial-gradient(circle at top left,#4facfe,#0f2027);
-  color: white;
-}
-
-body.light {
-  background: #f4f6fb;
-  color: #111;
-}
-
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body {
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  background:radial-gradient(circle at top left,#4facfe,#0f2027);
-  color:#fff;
+    height: 100vh;
+    background: #0e1015;
+    color: #f1f2f4;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-/* Topbar */
-.topbar{
-  height:60px;
-  background:rgba(0,0,0,0.45);
-  backdrop-filter:blur(10px);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
+/* TOPBAR */
+.topbar {
+    height: 60px;
+    background: #0a0c10;
+    border-bottom: 1px solid #1e2330;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    flex-shrink: 0;
 }
 
-.topbar a{
-  text-decoration:none;
-  background:linear-gradient(135deg,#4facfe,#00f2fe);
-  color:black;
-  padding:8px 18px;
-  border-radius:20px;
-  font-weight:600;
+.topbar .title { font-size: 16px; font-weight: 600; color: #fff; }
+
+.back-btn {
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .15s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.16); }
+
+/* LAYOUT */
+.container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
 }
 
-/* Layout */
-.container{
-  display:flex;
-  height:calc(100vh - 60px);
+/* USER LIST */
+.users {
+    width: 240px;
+    flex-shrink: 0;
+    background: #0a0c10;
+    border-right: 1px solid #1e2330;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-/* User List */
-.users{
-  width:25%;
-  background:rgba(255,255,255,0.12);
-  padding:15px;
-  overflow-y:auto;
+.users-header {
+    padding: 16px 18px 12px 18px;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #8b919e;
+    border-bottom: 1px solid #1e2330;
+    flex-shrink: 0;
 }
 
-.user{
-  padding:10px;
-  background:rgba(255,255,255,0.15);
-  margin-bottom:8px;
-  border-radius:12px;
+.users-list { overflow-y: auto; flex: 1; padding: 8px; }
+
+.user-item a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #c9ced8;
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: background .15s, color .15s;
+    margin-bottom: 2px;
+}
+.user-item a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.user-item.active a { background: #1c2236; color: #fff; }
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #4f6df5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
 }
 
-.user a{
-  color:white;
-  text-decoration:none;
-  display:block;
+/* CHAT AREA */
+.chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #0e1015;
 }
 
-/* Chat Area */
-.chat{
-  flex:1;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
+/* EMPTY STATE */
+.empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #8b919e;
+    font-size: 14px;
+    gap: 10px;
+}
+.empty-state .icon { font-size: 36px; }
+
+/* MESSAGES */
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.messages{
-  flex:1;
-  overflow-y:auto;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  padding-right:5px;
+.messages::-webkit-scrollbar { width: 6px; }
+.messages::-webkit-scrollbar-thumb { background: #262a33; border-radius: 6px; }
+
+.msg {
+    max-width: 68%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
 }
 
-/* Message Bubble */
-.msg{
-  max-width:70%;
-  padding:8px 12px;
-  border-radius:15px;
-  word-wrap:break-word;
+.msg .sender-name {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: .7;
+    margin-bottom: 2px;
 }
 
-/* User vs Admin */
-.msg-user{
-  background:rgba(255,255,255,0.15);
-  align-self:flex-start;
+.msg-user {
+    background: #1e2330;
+    color: #c9ced8;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
 }
 
-.msg-admin{
-  background:#34ffd2;
-  color:#111;
-  align-self:flex-end;
+.msg-admin {
+    background: #4f6df5;
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
 }
 
-/* Timestamp */
-.msg-time{
-  font-size:11px;
-  opacity:0.7;
-  margin-top:4px;
-  text-align:right;
+.msg-time {
+    font-size: 10.5px;
+    opacity: .6;
+    margin-top: 5px;
+    text-align: right;
 }
 
-/* Input */
-form{
-  display:flex;
-  gap:10px;
-  margin-top:10px;
+/* SEND ROW */
+.send-row {
+    display: flex;
+    gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid #1e2330;
+    background: #0e1015;
+    flex-shrink: 0;
 }
 
-input{
-  flex:1;
-  border-radius:30px;
-  border:none;
-  padding:10px 15px;
-  outline:none;
+input[type="text"] {
+    flex: 1;
+    border-radius: 24px;
+    border: 1px solid #262a33;
+    padding: 11px 16px;
+    outline: none;
+    font-size: 13.5px;
+    background: #181b22;
+    color: #f1f2f4;
+    transition: border-color .15s;
 }
+input[type="text"]:focus { border-color: #4f6df5; }
+input[type="text"]::placeholder { color: #4b5260; }
 
-button{
-  background:linear-gradient(135deg,#4facfe,#00f2fe);
-  border:none;
-  border-radius:30px;
-  padding:10px 22px;
-  cursor:pointer;
-  font-weight:600;
+button {
+    background: #4f6df5;
+    color: #fff;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13.5px;
+    transition: opacity .15s;
 }
+button:hover { opacity: .9; }
 </style>
 </head>
+
 <body>
 
-<div class="topbar">
-<span>Admin Private Chat</span>
-<a href="{{ url_for('dashboard') }}">⬅ Back</a>
-</div>
+<nav class="topbar">
+    <span class="title">Private Chats</span>
+    <a href="{{ url_for('admin_dashboard') }}" class="back-btn">Back to Dashboard</a>
+</nav>
 
 <div class="container">
 
-<div class="users">
-<h3>Users</h3>
-{% for u in users %}
-<div class="user">
-<a href="/admin_private_chat/{{ u[0] }}">{{ u[1] }}</a>
-</div>
-{% endfor %}
-</div>
-
-<div class="chat">
-  <div class="messages">
-
-    {% for id,msg,sender,time,username in chats %}
-    <div class="msg {% if sender=='admin' %}msg-admin{% else %}msg-user{% endif %}">
-      <b>{{ username if sender=='user' else 'Admin' }}:</b> {{ msg }}
-      <div class="msg-time">
-        {{ time.strftime('%I:%M %p | %d %b %Y') }}
-      </div>
+    <!-- USER LIST -->
+    <div class="users">
+        <div class="users-header">Conversations</div>
+        <div class="users-list">
+            {% for u in users %}
+            <div class="user-item {% if selected_user == u[0] %}active{% endif %}">
+                <a href="/admin_private_chat/{{ u[0] }}">
+                    <div class="user-avatar">{{ u[1][0]|upper }}</div>
+                    {{ u[1] }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    {% endfor %}
 
-  </div>
+    <!-- CHAT AREA -->
+    <div class="chat">
 
-  {% if chats %}
-  <form method="post">
-    <input type="text" name="message" placeholder="Reply..." required>
-    <button type="submit">Send</button>
-  </form>
-  {% endif %}
+        {% if not selected_user %}
+        <div class="empty-state">
+            <span class="icon">💬</span>
+            Select a user to view the conversation
+        </div>
+
+        {% else %}
+
+        <div class="messages">
+            {% for id, msg, sender, time, username in chats %}
+            <div class="msg {% if sender == 'admin' %}msg-admin{% else %}msg-user{% endif %}">
+                <span class="sender-name">{{ username if sender == 'user' else 'Admin' }}</span>
+                {{ msg }}
+                <div class="msg-time">{{ time.strftime('%I:%M %p | %d %b %Y') }}</div>
+            </div>
+            {% else %}
+            <div class="empty-state" style="margin:auto;">
+                <span class="icon">👋</span>
+                No messages yet. Start the conversation!
+            </div>
+            {% endfor %}
+        </div>
+
+        <form method="post" class="send-row">
+            <input type="text" name="message" placeholder="Type a reply..." required>
+            <button type="submit">Send</button>
+        </form>
+
+        {% endif %}
+
+    </div>
+
 </div>
 
-</div>
 </body>
 </html>
