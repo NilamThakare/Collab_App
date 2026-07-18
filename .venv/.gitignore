@@ -1,9 +1,0 @@
-FLASK_SECRET_KEY=Sparklabians
-REGISTRATION_SECRET=Sparklabians
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=root
-DB_NAME=collab_app
-MAIL_USERNAME=thakarenilam36@gmail.com
-MAIL_APP_PASSWORD=Nilam@2104
