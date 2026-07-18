@@ -1,0 +1,27 @@
+# Environment variables — NEVER commit this
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Uploads and user-generated files
+uploads/
+static/profile_pics/*
+!static/profile_pics/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

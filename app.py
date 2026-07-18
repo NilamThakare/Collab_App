@@ -16,9 +16,10 @@ ALLOWED_EXTENSIONS = {"zip"}
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# ── Secrets from .env ──────────────────────────────────────────────────────────
-REGISTRATION_SECRET = os.environ.get("REGISTRATION_SECRET", "Sparklabians")
-FLASK_SECRET_KEY    = os.environ.get("FLASK_SECRET_KEY", "change_me")
+
+# ── Secrets from .env (no hardcoded fallbacks) ────────────────────────────────
+REGISTRATION_SECRET = os.environ.get("REGISTRATION_SECRET")
+FLASK_SECRET_KEY    = os.environ.get("FLASK_SECRET_KEY")
 MAIL_USERNAME       = os.environ.get("MAIL_USERNAME")
 MAIL_APP_PASSWORD   = os.environ.get("MAIL_APP_PASSWORD")
 
@@ -27,6 +28,13 @@ DB_PORT     = int(os.environ.get("DB_PORT", "3306"))
 DB_USER     = os.environ.get("DB_USER", "root")
 DB_PASSWORD = os.environ.get("DB_PASSWORD", "")
 DB_NAME     = os.environ.get("DB_NAME", "collab_app")
+
+# Fail loudly at startup if critical secrets are missing
+if not FLASK_SECRET_KEY:
+    raise RuntimeError("FLASK_SECRET_KEY is not set. Add it to your .env file.")
+if not REGISTRATION_SECRET:
+    raise RuntimeError("REGISTRATION_SECRET is not set. Add it to your .env file.")
+
 
 app = Flask(__name__)
 app.secret_key = FLASK_SECRET_KEY
@@ -40,7 +48,7 @@ os.makedirs(UPLOAD_FOLDER,  exist_ok=True)
 os.makedirs(PROFILE_FOLDER, exist_ok=True)
 
 
-# ── Per-request DB connection (fixes the global cursor / OperationalError bug) ─
+# ── Per-request DB connection ─────────────────────────────────────────────────
 def get_db():
     return mysql.connector.connect(
         host=DB_HOST,
@@ -73,7 +81,7 @@ def send_otp_email(to_email, otp):
     server.quit()
 
 
-# ── Routes ─────────────────────────────────────────────────────────────────────
+# ── Routes ────────────────────────────────────────────────────────────────────
 
 @app.route("/")
 def home():
@@ -93,8 +101,7 @@ def download_code(code_id):
     cursor = db.cursor()
     cursor.execute("SELECT code FROM codes WHERE id=%s", (code_id,))
     result = cursor.fetchone()
-    cursor.close()
-    db.close()
+    cursor.close(); db.close()
     if not result:
         return "Code not found"
     return Response(
@@ -112,40 +119,40 @@ def login():
         login_type = request.form['login_type']
 
         if not email or not password:
-            return "Email or Password missing"
+            return render_template('login.html', error="Email or Password missing")
 
         db = get_db()
         cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
         user = cursor.fetchone()
-        cursor.close()
-        db.close()
+        cursor.close(); db.close()
 
         if not (user and check_password_hash(user['password'], password)):
-            return "Invalid credentials"
+            return render_template('login.html', error="Invalid email or password")
 
         if login_type == "admin" and user["role"] != "admin":
-            return "You are not an admin!"
+            return render_template('login.html', error="You are not an admin!")
         if login_type == "user" and user["role"] == "admin":
-            return "Admin must login using 'Login as Admin'"
+            return render_template('login.html', error="Admin must login using 'Login as Admin'")
+
+        # Single-device login enforcement
         if user["is_logged_in"] == 1 and user["role"] != "admin":
-            return "You are already logged in on another device!"
+            return render_template('login.html', error="You are already logged in on another device. Please logout from the other device first.")
 
         otp = random.randint(100000, 999999)
         db = get_db()
         cursor = db.cursor()
         cursor.execute("UPDATE users SET otp=%s WHERE id=%s", (otp, user['id']))
         db.commit()
-        cursor.close()
-        db.close()
+        cursor.close(); db.close()
 
         send_otp_email(user['email'], otp)
 
         session.clear()
-        session["temp_user_id"]    = user["id"]
-        session["temp_email"]      = user["email"]
-        session["temp_username"]   = user["username"]
-        session["temp_profile_pic"]= user["profile_pic"]
+        session["temp_user_id"]     = user["id"]
+        session["temp_email"]       = user["email"]
+        session["temp_username"]    = user["username"]
+        session["temp_profile_pic"] = user["profile_pic"]
 
         return redirect('/verify_otp')
 
@@ -164,8 +171,7 @@ def upload_code():
         (session["username"], code)
     )
     db.commit()
-    cursor.close()
-    db.close()
+    cursor.close(); db.close()
     return redirect("/dashboard")
 
 
@@ -269,7 +275,7 @@ def allow_logout(user_id):
         cursor.execute("UPDATE users SET can_logout=1 WHERE id=%s", (user_id,))
         db.commit()
         cursor.close(); db.close()
-        return "Logout permission granted!"
+        return redirect("/admin_dashboard")
     cursor.close(); db.close()
     return "Access Denied"
 
@@ -293,7 +299,7 @@ def contact():
         )
         db.commit()
         cursor.close(); db.close()
-        return "Message sent successfully!"
+        return render_template("contact.html", success=True)
     return render_template("contact.html")
 
 
@@ -369,7 +375,7 @@ def register():
         password   = request.form["password"]
         secret_key = request.form["secret_key"]
         if secret_key != REGISTRATION_SECRET:
-            return "Invalid Secret Key! You cannot register."
+            return render_template("reg.html", error="Invalid Secret Key! You cannot register.")
         db = get_db()
         cursor = db.cursor()
         cursor.execute(
@@ -405,7 +411,7 @@ def dashboard():
     remaining_time = int(SESSION_LIMIT - elapsed)
     if remaining_time <= 0:
         cursor.close(); db.close()
-        return redirect("/logout")
+        return redirect("/logout?auto=1")
 
     if request.method == "POST" and "file" in request.files:
         file = request.files["file"]
@@ -640,7 +646,7 @@ def verify_otp():
             cursor.close(); db.close()
             return redirect("/admin_dashboard" if role == "admin" else "/dashboard")
         cursor.close(); db.close()
-        return "Invalid OTP"
+        return render_template("verify_otp.html", error="Invalid OTP. Please try again.")
     return render_template("verify_otp.html")
 
 
